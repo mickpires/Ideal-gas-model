@@ -2,10 +2,9 @@ from particle import Particle
 import numpy as np
 from functions import *
 #from scipy.stats import maxwell_gen
-from random import randint
 #TODO: implementar os negócios de pressão da parede 
 class Space:
-    def __init__(self,Np=3,x=10,y=10,dt=1):
+    def __init__(self,Np=3,x=10,y=10,dt=1e-2):
         self.Np = Np
         self.x = x
         self.y = y
@@ -15,10 +14,14 @@ class Space:
         self.create()
 
     def create(self):
+        possible_positions = np.linspace(0,self.x-1,self.Np)
         for particle in self.particles:
-            if particle.id == 1:
-                particle.position = np.array([1,0])
-                particle.velocity = np.array([-1,0])
+            particle.position = np.array(np.random.choice(possible_positions,size=(1,2),replace=False)).flatten()
+            #print(f'posição da particula {particle.position}')
+
+            # if particle.id == 1:
+            #     particle.position = np.array([1,0])
+            #     particle.velocity = np.array([-1,-1])
 
     # def isThereSomethingAround(self,y,x):
     #     if self.space[y+1][x] == 0 and self.space[y-1][x] == 0 and self.space[y][x+1] == 0 and \

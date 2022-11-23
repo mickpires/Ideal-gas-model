@@ -9,7 +9,7 @@ class Collision(Space):
         self.did_collide_wall = False
 
     def checkCollisionWall(self,particle:Particle,x:int,y:int):
-        print(f'posição da particula {particle.pos_position}')
+        #print(f'posição da particula {particle.pos_position}')
         if x < 0 or x > self.x-1: 
             particle.velocity[0] *= -1
             if x < 0:
@@ -26,7 +26,7 @@ class Collision(Space):
                 particle.pos_position[1] = self.y-1
     
     def checkPath(self,particle:Particle): #implementar o que está escrito no arquivo teste aqui
-            num_pontos = 50
+            num_pontos = 2
             x = np.linspace(particle.position[0],particle.pos_position[0],num_pontos)
             y = np.linspace(particle.position[1],particle.pos_position[1],num_pontos)
             for i in range(num_pontos):
@@ -40,11 +40,11 @@ class Collision(Space):
                     continue
                 for i in particle1.path:
                     for j in particle2.path:
-                        if np.array_equal(i,j) and particle2.id not in ignore_list:
-                            print(f'A particula {particle1.id} e a particula {particle2.id} colidiram')
+                        if np.array_equal(i,j) and particle2.id not in ignore_list and not np.array_equal(particle1.velocity,particle2.velocity):
+                            #print(f'A particula {particle1.id} e a particula {particle2.id} colidiram')
                             self.collision(particle1,particle2)
-                            print(f'velocidade da particula 1: {particle1.velocity}')
-                            print(f'velocidade da particula 2: {particle2.velocity}')
+                            #print(f'velocidade da particula 1: {particle1.velocity}')
+                            #print(f'velocidade da particula 2: {particle2.velocity}')
                             for particle in (particle1,particle2):
                                     self.euler(particle)
                                     ignore_list.append(particle.id)
