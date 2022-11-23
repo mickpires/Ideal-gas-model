@@ -8,30 +8,29 @@ class Collision(Space):
         super().__init__(Np, x, y, dt)
         self.did_collide_wall = False
 
-    def checkCollisionWall(self,particle:Particle,y:int,x:int):
-        if x < 0 or x > self.x-1:
-            particle.velocity[1] *= -1
-            particle.pos_position[1] = particle.position[1] + particle.velocity[1] *self.dt
+    def checkCollisionWall(self,particle:Particle,x:int,y:int):
+        print(f'posição da particula {particle.pos_position}')
+        if x < 0 or x > self.x-1: 
+            particle.velocity[0] *= -1
             if x < 0:
                 self.did_collide_wall = True
-                self.forces.append(particle.force())
+                self.forces = np.vstack(particle.force())
+                particle.pos_position[0] = 0
+            elif x > self.x-1:
+                particle.pos_position[0] = self.x-1
         if y < 0 or y > self.y-1:
-            particle.velocity[0] *= -1
-            particle.pos_position[0] = particle.position[0] + particle.velocity[0] *self.dt
+            particle.velocity[1] *= -1
+            if y < 0:
+                particle.pos_position[1] = 0
+            elif y > self.y-1:
+                particle.pos_position[1] = self.y-1
     
-    def checkPath(self,particle:Particle):
-        path = particle.position.copy()
-        while path[0] != particle.pos_position[0] or path[1] != particle.pos_position[1]:
-            if particle.velocity[1] < 0:
-                path[1]-= 1
-            elif particle.velocity[1] > 0:
-                path[1] += 1
-            if particle.velocity[0] < 0:
-                path[0] -= 1
-            elif particle.velocity[0] > 0:
-                path[0] += 1
-            p = path.copy()
-            particle.path.append(p)
+    def checkPath(self,particle:Particle): #implementar o que está escrito no arquivo teste aqui
+            num_pontos = 50
+            x = np.linspace(particle.position[0],particle.pos_position[0],num_pontos)
+            y = np.linspace(particle.position[1],particle.pos_position[1],num_pontos)
+            for i in range(num_pontos):
+                particle.path = np.vstack((particle.path,[[x[i],y[i]]]))
 
     def checkCollision(self):
         ignore_list = []
@@ -69,6 +68,3 @@ class Collision(Space):
                         ((particle2.mass + particle1.mass) * \
                             np.absolute(magnitude(particle2_initial_velocity - \
                                 particle1_initial_velocity)*self.dt)**2)
-        
-        particle1.velocity = toInt(particle1.velocity)
-        particle2.velocity = toInt(particle2.velocity)

@@ -1,7 +1,7 @@
 import numpy as np
 
-class Particle():                          #y,x
-    def __init__(self,id,velocity=np.array([0,-2]),position=np.array([0,0]),mass=1e-3,radius = 1e-2,dt=1):
+class Particle:                          
+    def __init__(self,id,velocity=np.array([1,0]),position=np.array([0,0]),mass=1e-3,radius = 1e-2,dt=1):
         self.id = id
         self.velocity_x = velocity[1]
         self.velocity_y = velocity[0]
@@ -11,7 +11,7 @@ class Particle():                          #y,x
         self.mass = mass
         self.pos_position = np.zeros((1,2))
         self.symbol = 'x'
-        self.path = []
+        self.path = np.array([[]])
         self.dt = dt
     
     def force(self):
