@@ -3,8 +3,8 @@ from particle import Particle
 import numpy as np
 
 class Simulation(Collision):
-    def __init__(self, Np=3, x=10, y=10, dt=1):
-        super().__init__(Np, x, y, dt)
+    def __init__(self, Np=3, x=10, y=10, dt=1,initial_velocity=1):
+        super().__init__(Np, x, y, dt,initial_velocity)
         self.time_wall_collision = np.array([[]])
         self.pressures = np.array([[]])
         self.wall_vector = np.array([[0,self.x]]) #vetor da parede que detecto a pressão
@@ -19,7 +19,7 @@ class Simulation(Collision):
             particle.position = particle.pos_position
             #print(f'A particula {particle.id} andou nesse loop: {particle.path}')
             particle.path = np.array([[]])
-      #  print(f'A parede foi colidida? {self.did_collide_wall}')
+       # print(f'A parede foi colidida? {self.did_collide_wall}')
         if self.did_collide_wall:                                
             self.checkPressure()
 
@@ -30,7 +30,7 @@ class Simulation(Collision):
         #total_force = total_force / len(self.forces)
         #print(f'total_force: {total_force}')
         pressure = total_force/self.x
-      #  print(f"O comprimento da array self.forces é {self.forces}")
+       # print(f"O comprimento da array self.forces é {self.forces}")
       #  print(f'A força total é {total_force}')
       #  print(f'A pressão na parede é {pressure}')
        # print(f'As forças que colidiram na parede: {self.forces}')

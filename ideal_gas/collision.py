@@ -4,8 +4,8 @@ import numpy as np
 from functions import *
 
 class Collision(Space):
-    def __init__(self, Np=3, x=10, y=10, dt=1):
-        super().__init__(Np, x, y, dt)
+    def __init__(self, Np=3, x=10, y=10, dt=1,initial_velocity=1):
+        super().__init__(Np, x, y, dt,initial_velocity)
         self.did_collide_wall = False
 
     def checkCollisionWall(self,particle:Particle,x:int,y:int):
